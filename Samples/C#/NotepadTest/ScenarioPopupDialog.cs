@@ -15,11 +15,11 @@
 //******************************************************************************
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium.Appium.Windows;
-using OpenQA.Selenium.Remote;
 using OpenQA.Selenium;
-using System.Threading;
+using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Windows;
 using System;
+using System.Threading;
 
 namespace NotepadTest
 {
@@ -62,11 +62,11 @@ namespace NotepadTest
         public static void ClassCleanup()
         {
             // Create a Windows Explorer session to delete the saved text file above
-            DesiredCapabilities appCapabilities = new DesiredCapabilities();
-            appCapabilities.SetCapability("app", ExplorerAppId);
-            appCapabilities.SetCapability("deviceName", "WindowsPC");
+            AppiumOptions appOptions = new AppiumOptions();
+            appOptions.AddAdditionalCapability("app", ExplorerAppId);
+            appOptions.AddAdditionalCapability("deviceName", "WindowsPC");
 
-            WindowsDriver<WindowsElement> windowsExplorerSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities);
+            WindowsDriver<WindowsElement> windowsExplorerSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appOptions);
             Assert.IsNotNull(windowsExplorerSession);
 
             // Navigate Windows Explorer to the target save location folder
